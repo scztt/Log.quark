@@ -94,8 +94,8 @@ Log : Singleton {
 	}
 
 	log {
-		| str, inLevel = \default |
-		this.log(str, inLevel)
+		| str, level |
+		this.set(str, level)
 	}
 
 	set {
