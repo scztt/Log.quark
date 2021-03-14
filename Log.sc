@@ -193,7 +193,6 @@ LogWindow : Singleton {
 		| namesArray |
 		var newNames;
 
-		namesArray.postln;
 		namesArray = namesArray ?? [name];
 
 		if (namesArray.isKindOf(Symbol) || namesArray.isKindOf(String)) {
