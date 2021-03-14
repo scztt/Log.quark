@@ -1,11 +1,30 @@
 Log : Singleton {
-	classvar defaultFormatter, onErrorAction, <levels, exceptionHandler;
-	var <>actions, <>formatter, <>shouldPost = true, <>maxLength = 500, <lines, <level, levelNum;
+	classvar defaultFormatter, splitLineFormatter, onErrorAction, <levels, exceptionHandler;
+	var <>actions, <>formatter, <>shouldPost = true, <>maxLength = 500, <lines, <level, levelNum,
+	<splitLines=false, <>unprintedLine="";
 
 	*initClass {
 		defaultFormatter = {
 			|item, log|
-			"[%]".format(log.name.asString().toUpper()).padRight(12) ++ item[\string];
+			"[%] ".format(log.name.asString().toUpper()).padRight(12) ++ item[\string];
+		};
+
+		splitLineFormatter = {
+			|item, log|
+			var logOutput;
+
+			log.unprintedLine = log.unprintedLine ++ item[\string];
+
+			if (log.unprintedLine.contains("\n")) {
+				log.unprintedLine = log.unprintedLine.split(Char.nl);
+				logOutput = log.unprintedLine[0..(log.unprintedLine.size - 2)].collect({
+					|line|
+					"[%] ".format(log.name.asString().toUpper()).padRight(12) ++ line;
+				}).join("\n");
+				log.unprintedLine = log.unprintedLine.last;
+
+				logOutput
+			}
 		};
 
 		levels = (
@@ -51,8 +70,19 @@ Log : Singleton {
 	init {
 		actions = IdentitySet();
 		lines = LinkedList(maxLength);
-		formatter = defaultFormatter;
+		formatter = splitLines.if({ splitLineFormatter }, { defaultFormatter });
 		this.level = \info;
+	}
+
+	splitLines_{
+		|value|
+		splitLines = value;
+		if (splitLines and: { formatter == defaultFormatter }) {
+			formatter = splitLineFormatter
+		};
+		if (splitLines.not and: { formatter == splitLineFormatter }) {
+			formatter = defaultFormatter;
+		}
 	}
 
 	level_{
