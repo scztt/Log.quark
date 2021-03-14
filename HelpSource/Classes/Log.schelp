@@ -22,6 +22,8 @@ NOTE::
 This creates a root level exception handler to allow logging of all exceptions. This will handle most but emphasis::NOT:: all exceptions. Also, be aware that this risks throwing during exception handling, which is almost always bad - this should be considered unstable functionality.
 ::
 
+INSTANCEMETHODS::
+
 METHOD:: critical
 Log a message with a level of "debug". By default, these items are shown.
 
@@ -91,6 +93,9 @@ A link::Classes/Function:: of the form { |item, log| }, where item is a log even
 
 METHOD:: actions
 An link::Classes/IdentitySet:: containing functions to be executed for each new log event. Functions should be of the form: { |item, log| }, where item is a log event and log is the parent link::Classes/Log:: object.
+
+METHOD:: splitLines
+When set to code::true::, multi-line strings will be split over multiple log lines - that is, each will be prepended with the name of the log.
 
 
 EXAMPLES::
