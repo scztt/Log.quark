@@ -9,6 +9,7 @@ Log : Singleton {
 		};
 
 		levels = (
+			all: -999,
 			debug: 0,
 			info: 1,
 			warning: 3,
