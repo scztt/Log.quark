@@ -101,27 +101,27 @@ Log : Singleton {
 
 	debug {
 		| str ...items |
-		this.set(str.format(*items), \debug)
+		this.set(str.asString.format(*items), \debug)
 	}
 
 	info {
 		| str ...items |
-		this.set(str.format(*items), \info)
+		this.set(str.asString.format(*items), \info)
 	}
 
 	warning {
 		| str ...items |
-		this.set(str.format(*items), \warning)
+		this.set(str.asString.format(*items), \warning)
 	}
 
 	error {
 		| str ...items |
-		this.set(str.format(*items), \error)
+		this.set(str.asString.format(*items), \error)
 	}
 
 	critical {
 		| str ...items |
-		this.set(str.format(*items), \critical)
+		this.set(str.asString.format(*items), \critical)
 	}
 
 	log {
