@@ -4,6 +4,8 @@ Log : Singleton {
 	<splitLines=false, <>unprintedLine="";
 
 	*initClass {
+		Class.initClassTree(Singleton);
+
 		defaultFormatter = {
 			|item, log|
 			"[%] ".format(log.name.asString().toUpper()).padRight(12) ++ item[\string];
